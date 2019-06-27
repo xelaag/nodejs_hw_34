@@ -12,7 +12,6 @@ exports.get = () =>
       }
       resolve(products);
     } catch (error) {
-      // eslint-disable-next-line prefer-promise-reject-errors
       reject({
         success: false,
         status: 500
@@ -36,13 +35,11 @@ exports.add = ({ photo, name, price }) =>
 
       if (!name || !price) {
         fs.unlinkSync(tempPath);
-        // eslint-disable-next-line prefer-promise-reject-errors
         reject('All fields are required');
         return;
       }
       if (!photoName || !size) {
         fs.unlinkSync(tempPath);
-        // eslint-disable-next-line prefer-promise-reject-errors
         reject('File not saved');
         return;
       }

@@ -11,7 +11,6 @@ exports.auth = ({ email, password }) =>
       }
       resolve(true);
     } catch (error) {
-      // eslint-disable-next-line prefer-promise-reject-errors
       reject({
         success: false,
         status: 500
