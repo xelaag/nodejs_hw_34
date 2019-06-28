@@ -4,14 +4,18 @@ const router = new Router();
 const productsCtrl = require('../controlers/products.js');
 const authCtrl = require('../controlers/auth.js');
 const skillsCtrl = require('../controlers/skills.js');
+const emailCtrl = require('../controlers/email.js');
 
 router.get('/', async ctx => {
   try {
     const products = await productsCtrl.get();
     const skills = await skillsCtrl.get();
+    const msgsemail =
+      ctx.flash && ctx.flash.get() ? ctx.flash.get().msgsemail : null;
     ctx.render('index', {
       products,
-      skills
+      skills,
+      msgsemail
     });
   } catch (error) {
     console.error('err', error);
@@ -22,13 +26,24 @@ router.get('/', async ctx => {
     }
   }
 });
+router.post('/', async ctx => {
+  try {
+    await emailCtrl.auth(ctx.request.body);
+    ctx.flash.set({ msgsemail: 'Email has been sent!' });
+    ctx.redirect('/');
+  } catch (error) {
+    console.error('err', error);
+    ctx.flash.set({ msgsemail: error });
+    ctx.redirect('/');
+  }
+});
 router.get('/admin', async ctx => {
   try {
     if (ctx.session.isAuth) {
       const msgskill =
-        ctx.flash && ctx.flash.get().msgskill ? ctx.flash.get().msgskill : null;
+        ctx.flash && ctx.flash.get() ? ctx.flash.get().msgskill : null;
       const msgfile =
-        ctx.flash && ctx.flash.get().msgfile ? ctx.flash.get().msgfile : null;
+        ctx.flash && ctx.flash.get() ? ctx.flash.get().msgfile : null;
 
       ctx.render('admin', {
         msgskill,
