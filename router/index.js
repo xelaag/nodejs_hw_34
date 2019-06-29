@@ -1,103 +1,101 @@
-const Router = require('koa-router');
-const router = new Router();
+const express = require('express');
+const router = express.Router();
 
-const productsCtrl = require('../controlers/products.js');
-const authCtrl = require('../controlers/auth.js');
-const skillsCtrl = require('../controlers/skills.js');
-const emailCtrl = require('../controlers/email.js');
+const indexCtrl = require('../controlers/index');
+// const authCtrl = require('../controlers/auth');
+// const emailCtrl = require('../controlers/email');
 
-router.get('/', async ctx => {
-  try {
-    const products = await productsCtrl.get();
-    const skills = await skillsCtrl.get();
-    const msgsemail =
-      ctx.flash && ctx.flash.get() ? ctx.flash.get().msgsemail : null;
-    ctx.render('index', {
-      products,
-      skills,
-      msgsemail
-    });
-  } catch (error) {
-    console.error('err', error);
-    if (error.status) {
-      ctx.status = error.status;
-    } else {
-      ctx.status = 500;
-    }
-  }
-});
-router.post('/', async ctx => {
-  try {
-    await emailCtrl.auth(ctx.request.body);
-    ctx.flash.set({ msgsemail: 'Email has been sent!' });
-    ctx.redirect('/');
-  } catch (error) {
-    console.error('err', error);
-    ctx.flash.set({ msgsemail: error });
-    ctx.redirect('/');
-  }
-});
-router.get('/admin', async ctx => {
-  try {
-    if (ctx.session.isAuth) {
-      const msgskill =
-        ctx.flash && ctx.flash.get() ? ctx.flash.get().msgskill : null;
-      const msgfile =
-        ctx.flash && ctx.flash.get() ? ctx.flash.get().msgfile : null;
+router.get('/', indexCtrl.get);
 
-      ctx.render('admin', {
-        msgskill,
-        msgfile
-      });
-    } else {
-      ctx.redirect('/login');
-    }
-  } catch (error) {
-    console.error('err', error);
-    ctx.status = 404;
-  }
-});
-router.post('/admin/upload', async ctx => {
-  try {
-    await productsCtrl.add({ ...ctx.request.files, ...ctx.request.body });
-    ctx.render('admin');
-  } catch (error) {
-    console.error('err', error);
-    ctx.flash.set({ msgfile: error });
-    ctx.redirect('/admin');
-  }
-});
-router.get('/login', async ctx => {
-  try {
-    const msgslogin =
-      ctx.flash && ctx.flash.get() ? ctx.flash.get().msgslogin : null;
-    ctx.render('login', { msgslogin });
-  } catch (error) {
-    console.error('err', error);
-    ctx.status = 404;
-  }
-});
-router.post('/login', async ctx => {
-  try {
-    await authCtrl.auth(ctx.request.body);
-    ctx.session.isAuth = true;
-    ctx.redirect('admin');
-  } catch (error) {
-    console.error('err', error);
-    ctx.flash.set({ msgslogin: error });
-    ctx.redirect('/login');
-  }
-});
-router.post('/admin/skills', async ctx => {
-  try {
-    console.log('tx.request.body:', ctx.request.body);
-    await skillsCtrl.add({ ...ctx.request.body });
-    ctx.render('admin');
-  } catch (error) {
-    console.error('err', error);
-    ctx.flash.set({ msgskill: error });
-    ctx.redirect('/admin');
-  }
-});
+// router.post('/', productsCtrl.post);
+
+// router.post('/', async ctx => {
+//   try {
+//     await emailCtrl.auth(ctx.request.body);
+//     ctx.flash.set({ msgsemail: 'Email has been sent!' });
+//     ctx.redirect('/');
+//   } catch (error) {
+//     console.error('err', error);
+//     ctx.flash.set({ msgsemail: error });
+//     ctx.redirect('/');
+//   }
+// });
+
+// router.get('/admin', authCtrl.get);
+
+// router.get('/admin', async ctx => {
+//   try {
+//     if (ctx.session.isAuth) {
+//       const msgskill =
+//         ctx.flash && ctx.flash.get() ? ctx.flash.get().msgskill : null;
+//       const msgfile =
+//         ctx.flash && ctx.flash.get() ? ctx.flash.get().msgfile : null;
+
+//       ctx.render('admin', {
+//         msgskill,
+//         msgfile
+//       });
+//     } else {
+//       ctx.redirect('/login');
+//     }
+//   } catch (error) {
+//     console.error('err', error);
+//     ctx.status = 404;
+//   }
+// });
+
+// router.post('/admin/upload', productsCtrl.post);
+
+// router.post('/admin/upload', async ctx => {
+//   try {
+//     await productsCtrl.add({ ...ctx.request.files, ...ctx.request.body });
+//     ctx.render('admin');
+//   } catch (error) {
+//     console.error('err', error);
+//     ctx.flash.set({ msgfile: error });
+//     ctx.redirect('/admin');
+//   }
+// });
+
+// router.get('/login', authCtrl.get);
+
+// router.get('/login', async ctx => {
+//   try {
+//     const msgslogin =
+//       ctx.flash && ctx.flash.get() ? ctx.flash.get().msgslogin : null;
+//     ctx.render('login', { msgslogin });
+//   } catch (error) {
+//     console.error('err', error);
+//     ctx.status = 404;
+//   }
+// });
+
+// router.post('/login', authCtrl.auth);
+
+// router.post('/login', async ctx => {
+//   try {
+//     await authCtrl.auth(ctx.request.body);
+//     ctx.session.isAuth = true;
+//     ctx.redirect('admin');
+//   } catch (error) {
+//     console.error('err', error);
+//     ctx.flash.set({ msgslogin: error });
+//     ctx.redirect('/login');
+//   }
+// });
+
+// router.post('/admin/skills', skillsCtrl.post);
+
+// router.post('/admin/skills', async ctx => {
+//   try {
+//     console.log('tx.request.body:', ctx.request.body);
+//     await skillsCtrl.add({ ...ctx.request.body });
+//     ctx.render('admin');
+//   } catch (error) {
+//     console.error('err', error);
+//     ctx.flash.set({ msgskill: error });
+//     ctx.redirect('/admin');
+//   }
+// });
 
 module.exports = router;
