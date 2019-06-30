@@ -10,5 +10,9 @@
         "pass": "2ixSKT131"
       }
     }
+  },
+  "admin": {
+    "login": "admin@admin.com",
+    "password": "123"
   }
 }

@@ -1,6 +1,7 @@
 const skillsModel = require('../models/skills');
 const productsModel = require('../models/products');
 
+// render index.pub and load products and skills
 module.exports.get = async (req, res) => {
   try {
     let products = await productsModel.get();

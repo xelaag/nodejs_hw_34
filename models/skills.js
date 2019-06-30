@@ -1,27 +1,31 @@
 /* eslint-disable no-console */
-const fs = require('fs');
 const path = require('path');
 
-const skillsPath = path.join(__dirname, '../temp/skills.json');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync(path.join(__dirname, '../lowDb/db.json'));
+const db = low(adapter);
+// Set some defaults (required if your JSON file is empty)
+db.defaults({ products: [], skills: [] }).write();
 
+exports.get = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const skills = db.get('skills').value();
+      resolve(skills);
+    } catch (error) {
+      console.log('Error to get skills: ', error);
+      reject({
+        success: false,
+        status: 500
+      });
+    }
+  });
 exports.add = ({ age, concerts, cities, years }) =>
   new Promise(async (resolve, reject) => {
     try {
-      if (!age || !concerts || !cities || !years) {
-        reject('All fields are required');
-        return;
-      }
-
-      let skills = [];
-
-      try {
-        fs.accessSync(skillsPath);
-        skills = JSON.parse(fs.readFileSync(skillsPath, 'utf-8'));
-      } catch (err) {
-        console.log('No dir: ', skillsPath);
-      }
-
-      skills = [
+      // Add a skills
+      db.set('skills', [
         {
           number: age,
           text: 'Возраст начала занятий на скрипке'
@@ -38,32 +42,13 @@ exports.add = ({ age, concerts, cities, years }) =>
           number: years,
           text: 'Лет на сцене в качестве скрипача'
         }
-      ];
+      ]).write();
+      console.log('Skills has been updated');
 
-      fs.writeFileSync(
-        path.join(process.cwd(), '/temp/skills.json'),
-        JSON.stringify(skills)
-      );
       resolve(true);
     } catch (error) {
       console.log('Error to save skills: ', error);
 
-      reject({
-        success: false,
-        status: 500
-      });
-    }
-  });
-exports.get = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-      let skills = [];
-      if (fs.existsSync(skillsPath)) {
-        skills = JSON.parse(fs.readFileSync(skillsPath, 'utf-8'));
-      }
-      resolve(skills);
-    } catch (error) {
-      console.log('Error to get skills: ', error);
       reject({
         success: false,
         status: 500

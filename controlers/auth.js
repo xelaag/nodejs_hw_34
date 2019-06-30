@@ -1,3 +1,5 @@
+const config = require('../config.json');
+
 exports.auth = ({ email, password }) =>
   new Promise(async (resolve, reject) => {
     try {
@@ -5,7 +7,7 @@ exports.auth = ({ email, password }) =>
         reject('Email & pass are required!');
         return;
       }
-      if (email !== 'admin@admin.com' || password !== '123') {
+      if (email !== config.mail || password !== config.password) {
         reject('Unathorized!');
         return;
       }
@@ -17,3 +19,12 @@ exports.auth = ({ email, password }) =>
       });
     }
   });
+
+// render index.pub and load products and skills
+module.exports.get = async (req, res) => {
+  try {
+    res.render('./pages/login', {});
+  } catch (error) {
+    return res.status(500).send({ error: 'something blew up' });
+  }
+};

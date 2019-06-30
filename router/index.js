@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const indexCtrl = require('../controlers/index');
-// const authCtrl = require('../controlers/auth');
+const authCtrl = require('../controlers/auth');
+const adminCtrl = require('../controlers/admin');
 // const emailCtrl = require('../controlers/email');
 
 router.get('/', indexCtrl.get);
@@ -21,7 +22,14 @@ router.get('/', indexCtrl.get);
 //   }
 // });
 
-// router.get('/admin', authCtrl.get);
+const isAdmin = (req, res, next) => {
+  if (req.session.isAdmin) {
+    return next();
+  }
+  res.redirect('/login');
+};
+
+router.get('/admin', isAdmin, adminCtrl.get);
 
 // router.get('/admin', async ctx => {
 //   try {
@@ -44,7 +52,7 @@ router.get('/', indexCtrl.get);
 //   }
 // });
 
-// router.post('/admin/upload', productsCtrl.post);
+router.post('/admin/upload', isAdmin, adminCtrl.addProducts);
 
 // router.post('/admin/upload', async ctx => {
 //   try {
@@ -57,7 +65,7 @@ router.get('/', indexCtrl.get);
 //   }
 // });
 
-// router.get('/login', authCtrl.get);
+router.get('/login', authCtrl.get);
 
 // router.get('/login', async ctx => {
 //   try {
