@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const indexCtrl = require('../controlers/index');
-const authCtrl = require('../controlers/auth');
+const loginCtrl = require('../controlers/login');
 const adminCtrl = require('../controlers/admin');
 // const emailCtrl = require('../controlers/email');
 
@@ -24,6 +24,7 @@ router.get('/', indexCtrl.get);
 
 const isAdmin = (req, res, next) => {
   if (req.session.isAdmin) {
+    console.log('isAdmin - yes');
     return next();
   }
   res.redirect('/login');
@@ -65,7 +66,7 @@ router.post('/admin/upload', isAdmin, adminCtrl.addProducts);
 //   }
 // });
 
-router.get('/login', authCtrl.get);
+router.get('/login', loginCtrl.get);
 
 // router.get('/login', async ctx => {
 //   try {
@@ -78,7 +79,7 @@ router.get('/login', authCtrl.get);
 //   }
 // });
 
-// router.post('/login', authCtrl.auth);
+router.post('/login', loginCtrl.auth);
 
 // router.post('/login', async ctx => {
 //   try {

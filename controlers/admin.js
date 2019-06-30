@@ -6,7 +6,7 @@ const skillsModel = path.join(__dirname, '../models/skills.js');
 
 module.exports.get = (req, res) => {
   try {
-    res.redirect('/login');
+    res.render('./pages/admin');
   } catch (error) {
     return res.status(500).send({ error: 'something blew up' });
   }
