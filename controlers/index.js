@@ -6,7 +6,7 @@ module.exports.get = async (req, res) => {
   try {
     let products = await productsModel.get();
     let skills = await skillsModel.get();
-    res.render('./pages/index', {
+    res.render('../views/pages/index', {
       products,
       skills
     });

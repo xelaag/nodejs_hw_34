@@ -4,12 +4,12 @@ const path = require('path');
 const productsModel = path.join(__dirname, '../models/products.js');
 const skillsModel = path.join(__dirname, '../models/skills.js');
 
+// module.exports.get = function(req, res) {
+//   res.render('../views/pages/admin');
+// };
+
 module.exports.get = (req, res) => {
-  try {
-    res.render('./pages/admin');
-  } catch (error) {
-    return res.status(500).send({ error: 'something blew up' });
-  }
+  res.render('../views/pages/admin');
 };
 
 module.exports.addProducts = (req, res, next) => {

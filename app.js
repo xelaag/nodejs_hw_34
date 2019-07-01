@@ -43,7 +43,8 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
-  res.render('error', { message: err.message, error: err });
+  // res.render('./views/pages/login.pug', { message: err.message, error: err });
+  res.send({ message: err.status });
 });
 
 const server = app.listen(process.env.PORT || 3000, function() {

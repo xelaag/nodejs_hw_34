@@ -30,8 +30,6 @@ const isAdmin = (req, res, next) => {
   res.redirect('/login');
 };
 
-router.get('/admin', isAdmin, adminCtrl.get);
-
 // router.get('/admin', async ctx => {
 //   try {
 //     if (ctx.session.isAuth) {
@@ -92,6 +90,7 @@ router.post('/login', loginCtrl.auth);
 //     ctx.redirect('/login');
 //   }
 // });
+router.get('/admin', isAdmin, adminCtrl.get);
 
 // router.post('/admin/skills', skillsCtrl.post);
 
