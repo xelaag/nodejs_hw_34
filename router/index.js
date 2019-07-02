@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 const express = require('express');
 const router = express.Router();
 
-const indexCtrl = require('../controlers/index');
-const loginCtrl = require('../controlers/login');
-const adminCtrl = require('../controlers/admin');
+const indexCtrl = require('../controllers/index');
+const loginCtrl = require('../controllers/login');
+const adminCtrl = require('../controllers/admin');
 // const emailCtrl = require('../controlers/email');
 
 router.get('/', indexCtrl.get);
@@ -27,6 +28,7 @@ const isAdmin = (req, res, next) => {
     console.log('isAdmin - yes');
     return next();
   }
+  console.log('isAdmin - no');
   res.redirect('/login');
 };
 

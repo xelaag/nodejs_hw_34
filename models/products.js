@@ -21,19 +21,11 @@ exports.get = () =>
     }
   });
 
-exports.add = product =>
-  new Promise(async (resolve, reject) => {
-    try {
-      // Add a products
-      db.get('products')
-        .push({ product })
-        .write();
-      console.log('New Products: ' + name + ' has been saved');
-      resolve(true);
-    } catch (error) {
-      reject({
-        success: false,
-        status: 500
-      });
-    }
-  });
+module.exports.add = (src, name, price) => {
+  // Add a products
+  db.get('products')
+    .push({ src, name, price })
+    .write();
+  console.log('New Products: ' + name + ' has been saved');
+  return true;
+};
