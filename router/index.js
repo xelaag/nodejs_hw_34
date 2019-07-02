@@ -94,7 +94,7 @@ router.post('/login', loginCtrl.auth);
 // });
 router.get('/admin', isAdmin, adminCtrl.get);
 
-// router.post('/admin/skills', skillsCtrl.post);
+router.post('/admin/skills', isAdmin, adminCtrl.addSkills);
 
 // router.post('/admin/skills', async ctx => {
 //   try {
