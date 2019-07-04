@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-module.exports.auth = (data, connection) =>
+module.exports.send = (data, connection) =>
   new Promise(async (resolve, reject) => {
     try {
       const { name, email, message } = data;
