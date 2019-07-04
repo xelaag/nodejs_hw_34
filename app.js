@@ -1,6 +1,10 @@
 const Koa = require('koa');
 const app = new Koa();
 
+const fs = require('fs');
+const path = require('path');
+const config = require(path.join(__dirname, './config.json'));
+
 const Pug = require('koa-pug');
 const pug = new Pug({
   viewPath: './views/pages',
@@ -49,4 +53,7 @@ app.use(router.allowedMethods());
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
   console.log('Server running on localhost:3000');
+  if (!fs.existsSync(path.join(__dirname, config.upload.path))) {
+    fs.mkdirSync(path.join(__dirname, config.upload.path));
+  }
 });

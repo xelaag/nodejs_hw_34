@@ -10,7 +10,7 @@ module.exports.get = async ctx => {
     const skills = await skillsModel.get();
     const msgsemail =
       ctx.flash && ctx.flash.get() ? ctx.flash.get().msgsemail : null;
-    ctx.render('index', {
+    return ctx.render('index', {
       products,
       skills,
       msgsemail
@@ -30,14 +30,14 @@ module.exports.sendEmail = async ctx => {
     const { name, email, message } = ctx.request.body;
     if (!name || !email || !message) {
       ctx.flash.set({ msgsemail: '🙏 заполните все поля' });
-      ctx.redirect('/');
+      return ctx.redirect('/#status');
     }
     await emailLib.send(ctx.request.body, config.mail);
     ctx.flash.set({ msgsemail: '👍 сообщение отправлено' });
-    ctx.redirect('/');
+    return ctx.redirect('/#status');
   } catch (error) {
     console.error('err send email', error);
     ctx.flash.set({ msgsemail: '☹️ сообщение не отправлено' });
-    ctx.redirect('/');
+    return ctx.redirect('/#status');
   }
 };

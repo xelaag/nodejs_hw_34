@@ -46,11 +46,6 @@ exports.add = ({ age, concerts, cities, years }) =>
 
       resolve(true);
     } catch (error) {
-      console.log('Error to save skills: ', error);
-
-      reject({
-        success: false,
-        status: 500
-      });
+      reject(error);
     }
   });

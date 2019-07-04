@@ -21,35 +21,18 @@ exports.get = () =>
       reject(error);
     }
   });
-module.exports.add = ({ photo, name, price }) =>
+exports.add = (photo, { name, price }, upload) =>
   new Promise(async (resolve, reject) => {
     try {
-      const { name: photoName, size, path: tempPath } = photo;
-      const uploadDir = path.join(
-        process.cwd(),
-        '/public',
-        'assets',
-        'img',
-        'products'
-      );
-
-      if (!name || !price) {
-        fs.unlinkSync(tempPath);
-        reject('All fields are required');
-        return;
-      }
-      if (!photoName || !size) {
-        fs.unlinkSync(tempPath);
-        reject('File not saved');
-        return;
-      }
+      const { name: photoName, path: tempPath } = photo;
+      const uploadDir = path.join(process.cwd(), upload);
 
       fs.renameSync(tempPath, path.join(uploadDir, photoName));
 
       // Add a products
       db.get('products')
         .push({
-          src: './assets/img/products/' + photoName,
+          src: './upload/' + photoName,
           name: name,
           price: price
         })
@@ -57,9 +40,6 @@ module.exports.add = ({ photo, name, price }) =>
       console.log('New Products: ' + name + ' has been saved');
       resolve(true);
     } catch (error) {
-      reject({
-        success: false,
-        status: 500
-      });
+      reject(error);
     }
   });

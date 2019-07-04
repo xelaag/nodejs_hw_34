@@ -1,9 +1,8 @@
 const nodemailer = require('nodemailer');
 
-module.exports.send = (data, connection) =>
+module.exports.send = ({ name, email, message }, connection) =>
   new Promise(async (resolve, reject) => {
     try {
-      const { name, email, message } = data;
       const transporter = nodemailer.createTransport(connection.smtp);
       const mailOptions = {
         from: `"${name}" <${email}>`,
