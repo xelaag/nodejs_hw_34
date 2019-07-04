@@ -10,5 +10,16 @@
         "pass": "2ixSKT131"
       }
     }
+  },
+  "admin": {
+    "login": "admin@admin.com",
+    "password": "123"
+  },
+  "upload": {
+    "path": "./public/upload"
+  },
+  "port": "3000",
+  "db": {
+    "file": "../lowDb/db.json"
   }
 }

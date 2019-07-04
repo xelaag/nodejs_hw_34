@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
-const dbPath = path.join(__dirname, '../models/db.json');
+const config = require('../config.json');
+const dbPath = path.join(__dirname, config.db.file);
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 
@@ -16,13 +17,11 @@ exports.get = () =>
       const products = db.get('products').value();
       resolve(products);
     } catch (error) {
-      reject({
-        success: false,
-        status: 500
-      });
+      console.log('Error to get prodicts: ', error);
+      reject(error);
     }
   });
-exports.add = ({ photo, name, price }) =>
+module.exports.add = ({ photo, name, price }) =>
   new Promise(async (resolve, reject) => {
     try {
       const { name: photoName, size, path: tempPath } = photo;
@@ -33,9 +32,6 @@ exports.add = ({ photo, name, price }) =>
         'img',
         'products'
       );
-      if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir);
-      }
 
       if (!name || !price) {
         fs.unlinkSync(tempPath);

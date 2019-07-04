@@ -1,31 +1,13 @@
 const Router = require('koa-router');
 const router = new Router();
 
-const productsCtrl = require('../controlers/products.js');
-const authCtrl = require('../controlers/auth.js');
-const skillsCtrl = require('../controlers/skills.js');
-const emailCtrl = require('../controlers/email.js');
+const productsCtrl = require('../models/products.js');
+const authCtrl = require('../controllers/auth.js');
+const skillsCtrl = require('../models/skills.js');
+const emailCtrl = require('../controllers/email.js');
+const indexCtrl = require('../controllers/index.js');
 
-router.get('/', async ctx => {
-  try {
-    const products = await productsCtrl.get();
-    const skills = await skillsCtrl.get();
-    const msgsemail =
-      ctx.flash && ctx.flash.get() ? ctx.flash.get().msgsemail : null;
-    ctx.render('index', {
-      products,
-      skills,
-      msgsemail
-    });
-  } catch (error) {
-    console.error('err', error);
-    if (error.status) {
-      ctx.status = error.status;
-    } else {
-      ctx.status = 500;
-    }
-  }
-});
+router.get('/', indexCtrl.get);
 router.post('/', async ctx => {
   try {
     await emailCtrl.auth(ctx.request.body);
