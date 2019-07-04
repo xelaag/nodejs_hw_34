@@ -8,16 +8,8 @@ const db = low(adapter);
 db.defaults({ products: [], skills: [] }).write();
 
 module.exports.get = () => {
-  try {
-    const skills = db.get('skills').value();
-    return skills;
-  } catch (error) {
-    console.log('Error to get skills: ', error);
-    return {
-      success: false,
-      status: 500
-    };
-  }
+  const skills = db.get('skills').value();
+  return skills;
 };
 module.exports.add = ({ age, concerts, cities, years }) => {
   // Add a skills

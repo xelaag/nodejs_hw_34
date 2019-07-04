@@ -4,6 +4,7 @@ const formidable = require('formidable');
 const path = require('path');
 const productsModel = require(path.join(__dirname, '../models/products.js'));
 const skillsModel = require(path.join(__dirname, '../models/skills.js'));
+const config = require('../config.json');
 
 // module.exports.get = function(req, res) {
 //   res.render('../views/pages/admin');
@@ -23,7 +24,7 @@ module.exports.addSkills = (req, res, next) => {
 
 module.exports.addProducts = (req, res, next) => {
   let form = new formidable.IncomingForm();
-  let upload = path.join('./public/assets/img/product');
+  let upload = path.join(__dirname, config.upload.path);
 
   if (!fs.existsSync(upload)) {
     fs.mkdirSync(upload);

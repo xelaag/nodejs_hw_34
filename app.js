@@ -1,10 +1,14 @@
 /* eslint-disable no-console */
+const fs = require('fs');
 const express = require('express');
 const app = express();
 const path = require('path');
 const nocache = require('nocache');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
+const config = require(path.join(__dirname, './config.json'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -15,21 +19,39 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(nocache());
 
+app.use(cookieParser());
 app.use(
   session({
-    secret: 'homework',
-    key: 'sessionkey',
+    secret: 'login',
+    // key: 'sessionkey',
     cookie: {
-      path: '/',
-      httpOnly: true,
-      maxAge: 10 * 60 * 1000
+      // path: '/',
+      // httpOnly: true,
+      maxAge: 1 * 60 * 1000
     },
-    saveUninitialized: false,
-    resave: false
+    saveUninitialized: true,
+    resave: true
+  })
+);
+//session fo mail
+app.use(
+  session({
+    secret: 'mail',
+    saveUninitialized: true,
+    resave: true
   })
 );
 
-app.use('/', require(path.join(__dirname, './router')));
+app.use(flash());
+// app.use(function(req, res, next) {
+// res.locals.msgslogin = req.flash('msgslogin');
+// res.locals.msgsemail = req.flash('msgsemail');
+// res.locals.msgfile = req.flash('msgfile');
+// res.locals.msgskill = req.flash('msgskill');
+// next();
+// });
+
+app.use('/', require(path.join(__dirname, './router/index')));
 
 //catch 404 errors
 app.use(function(req, res, next) {
@@ -46,6 +68,9 @@ app.use(function(err, req, res, next) {
   res.send({ message: err.status });
 });
 
-const server = app.listen(process.env.PORT || 3000, function() {
+const server = app.listen(process.env.PORT || config.port, function() {
   console.log('Server running on localhost:' + server.address().port);
+  if (!fs.existsSync(path.join(__dirname, config.upload.path))) {
+    fs.mkdirSync(path.join(__dirname, config.upload.path));
+  }
 });

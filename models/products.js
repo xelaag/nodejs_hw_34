@@ -1,24 +1,19 @@
 /* eslint-disable no-console */
-const path = require('path');
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync(path.join(__dirname, '../lowDb/db.json'));
+const path = require('path');
+const config = require('../config.json');
+
+const adapter = new FileSync(path.join(__dirname, config.db.file));
 const db = low(adapter);
+
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ products: [], skills: [] }).write();
 
-module.exports.get = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-      const products = db.get('products').value();
-      resolve(products);
-    } catch (error) {
-      reject({
-        success: false,
-        status: 500
-      });
-    }
-  });
+module.exports.get = () => {
+  const products = db.get('products').value();
+  return products;
+};
 
 module.exports.add = (src, name, price) => {
   // Add a products
