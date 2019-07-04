@@ -49,19 +49,29 @@
       "src": "\\assets\\img\\product\\IMG_20190702_083954.jpg",
       "name": "qqq",
       "price": "123"
+    },
+    {
+      "src": "\\GitHub\\nodejs_hw_34\\public\\upload\\IMG_20190702_083954.jpg",
+      "name": "xxx",
+      "price": "123"
+    },
+    {
+      "src": "\\GitHub\\nodejs_hw_34\\public\\upload\\IMG_20190702_083954.jpg",
+      "name": "ccc",
+      "price": "1212"
     }
   ],
   "skills": [
     {
-      "number": "3",
+      "number": "1",
       "text": "Возраст начала занятий на скрипке"
     },
     {
-      "number": "3",
+      "number": "2",
       "text": "Концертов отыграл"
     },
     {
-      "number": "2",
+      "number": "1",
       "text": "Максимальное число городов в туре"
     },
     {

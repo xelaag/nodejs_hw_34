@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
-const path = require('path');
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync(path.join(__dirname, '../lowDb/db.json'));
+const path = require('path');
+const config = require('../config.json');
+
+const adapter = new FileSync(path.join(__dirname, config.db.file));
 const db = low(adapter);
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ products: [], skills: [] }).write();
@@ -32,10 +34,9 @@ module.exports.add = ({ age, concerts, cities, years }) => {
         text: 'Лет на сцене в качестве скрипача'
       }
     ]).write();
-    console.log('Skills has been updated');
 
     return true;
   } catch (error) {
-    return false;
+    return error;
   }
 };

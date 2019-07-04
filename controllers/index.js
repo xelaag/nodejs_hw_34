@@ -26,7 +26,7 @@ module.exports.sendEmail = (req, res) => {
       text: message.trim().slice(0, 500) + `\n Отправлено с: <${email}>`
     };
     // отправляем почту
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, error => {
       // если есть ошибки при отправке - сообщаем об этом
       if (error) {
         console.log('error sent email:', error);
