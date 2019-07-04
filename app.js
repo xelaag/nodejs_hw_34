@@ -23,11 +23,11 @@ app.use(cookieParser());
 app.use(
   session({
     secret: 'login',
-    // key: 'sessionkey',
+    key: 'mySess',
     cookie: {
       // path: '/',
       // httpOnly: true,
-      maxAge: 1 * 60 * 1000
+      maxAge: 10 * 60 * 1000
     },
     saveUninitialized: true,
     resave: true
@@ -43,13 +43,6 @@ app.use(
 );
 
 app.use(flash());
-// app.use(function(req, res, next) {
-// res.locals.msgslogin = req.flash('msgslogin');
-// res.locals.msgsemail = req.flash('msgsemail');
-// res.locals.msgfile = req.flash('msgfile');
-// res.locals.msgskill = req.flash('msgskill');
-// next();
-// });
 
 app.use('/', require(path.join(__dirname, './router/index')));
 
@@ -61,7 +54,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // render the error page
   res.status(err.status || 500);
   // res.render('./views/pages/login.pug', { message: err.message, error: err });

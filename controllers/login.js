@@ -5,24 +5,17 @@ exports.auth = (req, res) => {
   if (req.session.isAdmin) {
     return res.redirect('/admin');
   }
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
 
   if (!email || !password) {
-    req.flash('msgslogin', 'Email & pass are required!');
-    // req.flash('msgslogin', 'Email & pass are required!');
-    // res.local.msgslogin = req.flash('msgslogin');
-    // res.local.msgslogin = 'Email & pass are required!';
-
-    console.log('Email & pass are required!');
+    req.flash('login', '🙏 заполните все поля');
     return res.redirect('/login');
   }
   if (email !== config.admin.login || password !== config.admin.password) {
-    console.log('Неверный логин или пароль');
+    req.flash('login', '☹️ неверный логин или пароль');
     return res.redirect('/login');
   }
   req.session.isAdmin = true;
-  console.log('Авторизирован');
   return res.redirect('/admin');
 };
 
