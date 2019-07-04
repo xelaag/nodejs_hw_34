@@ -74,6 +74,8 @@ module.exports.addProducts = (req, res) => {
     const src = fileName.substr(fileName.indexOf('\\'));
 
     productsModel.add(src, name, price);
+    console.log('product have been updated');
+    req.flash('products', '️👍 products обновлены');
     res.redirect('/admin');
   });
 };
