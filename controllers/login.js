@@ -3,6 +3,9 @@ const config = require('../config.json');
 
 module.exports.get = async ctx => {
   try {
+    if (ctx.session.isAuth) {
+      return ctx.redirect('/admin');
+    }
     const msgslogin =
       ctx.flash && ctx.flash.get() ? ctx.flash.get().msgslogin : null;
     return ctx.render('login', { msgslogin });

@@ -26,7 +26,7 @@ module.exports.get = async ctx => {
 module.exports.addProducts = async ctx => {
   try {
     if (!ctx.session.isAuth) {
-      ctx.redirect('/login');
+      return ctx.redirect('/login');
     }
     const { name: photoName, size, path: tempPath } = ctx.request.files.photo;
     const { name, price } = ctx.request.body;
