@@ -4,21 +4,10 @@ const router = new Router();
 const productsCtrl = require('../models/products.js');
 const authCtrl = require('../controllers/auth.js');
 const skillsCtrl = require('../models/skills.js');
-const emailCtrl = require('../controllers/email.js');
 const indexCtrl = require('../controllers/index.js');
 
 router.get('/', indexCtrl.get);
-router.post('/', async ctx => {
-  try {
-    await emailCtrl.auth(ctx.request.body);
-    ctx.flash.set({ msgsemail: 'Email has been sent!' });
-    ctx.redirect('/');
-  } catch (error) {
-    console.error('err', error);
-    ctx.flash.set({ msgsemail: error });
-    ctx.redirect('/');
-  }
-});
+router.post('/', indexCtrl.sendEmail);
 router.get('/admin', async ctx => {
   try {
     if (ctx.session.isAuth) {

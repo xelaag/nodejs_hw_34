@@ -1,34 +1,26 @@
 const nodemailer = require('nodemailer');
-const config = require('../config.json');
 
-exports.auth = ({ name, email, message }) =>
+module.exports.auth = (data, connection) =>
   new Promise(async (resolve, reject) => {
     try {
-      if (!name || !email || !message) {
-        reject('Name, email and message are required!');
-        return;
-      }
-
-      const transporter = nodemailer.createTransport(config.mail.smtp);
+      const { name, email, message } = data;
+      const transporter = nodemailer.createTransport(connection.smtp);
       const mailOptions = {
         from: `"${name}" <${email}>`,
-        to: config.mail.smtp.auth.user,
-        subject: config.mail.subject,
+        to: connection.smtp.auth.user,
+        subject: connection.subject,
         text: message.trim().slice(0, 500) + `\n Отправлено с: <${email}>`
       };
       // отправляем почту
-      transporter.sendMail(mailOptions, (error, info) => {
+      transporter.sendMail(mailOptions, error => {
         // если есть ошибки при отправке - сообщаем об этом
         if (error) {
           reject('Email hasn`t been sent');
           return;
         }
-        resolve(info);
+        resolve(true);
       });
     } catch (error) {
-      reject({
-        success: false,
-        status: 500
-      });
+      reject(error);
     }
   });
