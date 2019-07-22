@@ -1,0 +1,82 @@
+{
+  "products": [
+    {
+      "src": "./assets/img/products/Work1.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work2.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work3.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work4.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work5.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work6.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work7.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work8.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "./assets/img/products/Work9.jpg",
+      "name": "Вино вдохновение",
+      "price": 600
+    },
+    {
+      "src": "\\assets\\img\\product\\IMG_20190702_083954.jpg",
+      "name": "qqq",
+      "price": "123"
+    },
+    {
+      "src": "\\GitHub\\nodejs_hw_34\\public\\upload\\IMG_20190702_083954.jpg",
+      "name": "xxx",
+      "price": "123"
+    },
+    {
+      "src": "\\GitHub\\nodejs_hw_34\\public\\upload\\IMG_20190702_083954.jpg",
+      "name": "ccc",
+      "price": "1212"
+    }
+  ],
+  "skills": [
+    {
+      "number": "1",
+      "text": "Возраст начала занятий на скрипке"
+    },
+    {
+      "number": "1",
+      "text": "Концертов отыграл"
+    },
+    {
+      "number": "1",
+      "text": "Максимальное число городов в туре"
+    },
+    {
+      "number": "1",
+      "text": "Лет на сцене в качестве скрипача"
+    }
+  ]
+}

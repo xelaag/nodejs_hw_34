@@ -1,0 +1,25 @@
+{
+  "mail": {
+    "subject": "Сообщение с сайта",
+    "smtp": {
+      "host": "smtp.gmail.com",
+      "port": 465,
+      "secure": true,
+      "auth": {
+        "user": "bakelevag@gmail.com",
+        "pass": "2ixSKT13"
+      }
+    }
+  },
+  "admin": {
+    "login": "admin@admin.com",
+    "password": "123"
+  },
+  "upload": {
+    "path": "./public/upload"
+  },
+  "port": "3000",
+  "db": {
+    "file": "../lowDb/db.json"
+  }
+}
